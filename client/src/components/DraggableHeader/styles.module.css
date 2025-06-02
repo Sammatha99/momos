@@ -1,0 +1,27 @@
+.header {
+  cursor: move;
+  border: 1px solid #ccc;
+  background: #f1f1f1;
+  padding: 15px 8px;
+  position: relative;
+}
+
+.dragHandle {
+  cursor: grab;
+  display: inline-block;
+  user-select: none; /* prevent text selection while dragging */
+  position:absolute;
+  top: 0px;
+  right: 10px;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.sort {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+  font-size: 12px;
+}

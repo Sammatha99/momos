@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: relative;
+
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.cell {
+  border: 1px solid #ccc;
+  padding: 8px;
+  position: relative;
+}
+
+.body {
+  position: relative;
+}
+
+.loadingContainer{
+  position: absolute;
+  top: 0;
+  bottom:0 ;
+  left:0;
+  right: 0;
+  background-color:  #ffffff80;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptyContainer{
+	position: relative;
+	min-height: 500px;
+}

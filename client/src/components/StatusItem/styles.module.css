@@ -1,0 +1,23 @@
+.Closed {
+  background-color: aquamarine;
+}
+
+.Lead {
+  background-color: hotpink;
+}
+
+.Proposal {
+  background-color: skyblue;
+}
+
+.Negotiation {
+  background-color: plum;
+}
+
+.Lost {
+  background-color: gray;
+}
+
+.Qualified {
+  background-color: antiquewhite;
+}
