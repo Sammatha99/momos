@@ -1,13 +1,13 @@
-import { useSortable } from '@dnd-kit/sortable';
-import { Header, flexRender } from '@tanstack/react-table';
-import { CSS } from '@dnd-kit/utilities';
-import styles from './styles.module.css';
-import ResizeBox from '../ResizeBox';
+import { useSortable } from "@dnd-kit/sortable";
+import { Header, flexRender } from "@tanstack/react-table";
+import { CSS } from "@dnd-kit/utilities";
+import styles from "./styles.module.css";
+import ResizeBox from "../ResizeBox";
 
 function DraggableHeader<T>({ header }: { header: Header<T, unknown> }) {
   const { setNodeRef, attributes, listeners, transform, transition } =
     useSortable({
-      id: header.column.id,
+      id: header.column.id
     });
 
   const canSort = header.column.getCanSort();
@@ -17,7 +17,7 @@ function DraggableHeader<T>({ header }: { header: Header<T, unknown> }) {
     transform: CSS.Transform.toString(transform),
     transition,
     width: header.getSize(),
-    cursor: canSort ? 'pointer' : 'default',
+    cursor: canSort ? "pointer" : "default"
   };
 
   return (
@@ -46,8 +46,8 @@ function DraggableHeader<T>({ header }: { header: Header<T, unknown> }) {
         ≡
       </span>
       <span className={styles.sort}>
-        {sortDirection === 'desc' && ' 🔽'}
-        {sortDirection === 'asc' && ' 🔼'}
+        {sortDirection === "desc" && "🔽"}
+        {sortDirection === "asc" && "🔼"}
       </span>
     </th>
   );

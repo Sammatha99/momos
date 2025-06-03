@@ -1,36 +1,34 @@
 // src/api.ts
-import axios from 'axios';
-import { SaleCRM, SalesCRMColumns } from '../components/SalesCRMTable/type';
-import { SortingState } from '@tanstack/react-table';
-import { QueryFunction } from '@tanstack/react-query';
+import axios from "axios";
+import { SaleCRM, SalesCRMColumns } from "../components/SalesCRMTable/type";
+import { SortingState } from "@tanstack/react-table";
+import { MutationFunction } from "@tanstack/react-query";
+import { FilterGroup } from "@src/components/Filter/types";
+import { formatNotionFilter } from "@src/utils";
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: "http://localhost:8000"
 });
 
-export const getSalesCRM: QueryFunction<
+export const getSalesCRM: MutationFunction<
   SaleCRM[],
-  (string | SortingState)[]
+  { sorts?: SortingState; filter?: FilterGroup }
 > = async (props) => {
-  // return new Promise((resolve, rejects) => {
-  //   setTimeout(async () => {
-  //     const res = await api.get('/test');
-  //     resolve(res.data.data as SaleCRM[]);
-  //   }, 3000);
-  // });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, sorting] = props.queryKey;
+  const { sorts: sortsProps, filter: filterProps } = props;
   const sorts =
-    sorting.length && Array.isArray(sorting)
-      ? sorting.map((sort) => ({
+    sortsProps?.length && Array.isArray(sortsProps)
+      ? sortsProps.map((sort) => ({
           property: SalesCRMColumns[sort.id as keyof typeof SalesCRMColumns],
-          direction: sort.desc ? 'descending' : 'ascending',
+          direction: sort.desc ? "descending" : "ascending"
         }))
       : undefined;
-  const res = await api.get('/test', {
-    params: {
-      sorts,
-    },
+  const filter = filterProps
+    ? formatNotionFilter(filterProps, SalesCRMColumns)
+    : undefined;
+  const res = await api.post("/", {
+    sorts,
+    filter
   });
   return res.data.data as SaleCRM[];
 };

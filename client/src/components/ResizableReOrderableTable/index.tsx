@@ -6,7 +6,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
-import globalStyles from '@src/index.module.css';
 
 import {
   closestCenter,

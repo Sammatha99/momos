@@ -1,55 +1,58 @@
-require('dotenv').config();
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
+import { StatusCodes } from "http-status-codes";
+import compression from 'compression'
 
-import { saleParser } from './utils/parsers/response';
-import { parseSortQuery } from './utils/parsers/query';
-import { notion } from './db';
-import { AddressInfo } from 'net';
+import { saleParser } from "./utils/parsers/response";
+import { parseSortQuery } from "./utils/parsers/query";
+import { notion } from "./db";
+import { env } from "./env";
+import { validate } from "./validators/validate";
+import { notionQueryBodySchema, NotionQueryBody } from "./validators/schemas";
+import {errorHandler} from './middlewares/errorHandler'
+import {asyncHandler} from './utils/asyncHandler'
 
 const app = express();
 
 app.use(cors());
+app.use(compression())
+app.use(express.json());
 
-app.get('/test', async (req, res) => {
+app.get("/test", async (req, res) => {
   const sorts = parseSortQuery(req.query);
 
   try {
     const query = await notion.databases.query({
-      database_id: process.env.NOTION_DATABASE_ID || '',
-      sorts,
+      database_id: env.NOTION_DATABASE_ID,
+      sorts
     });
 
     const data = saleParser.parseQueryDatabaseResponse(query);
 
-    res.status(200).json({ message: 'Success', data, sorts });
+    res.status(200).json({ message: "Success", data, sorts });
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: (error as Error).message });
+    res.status(500).json({ message: "Error", error: (error as Error).message });
   }
 });
 
-app.get('/', async (req, res) => {
-  const sorts = parseSortQuery(req.query);
+app.post("/", validate({ body: notionQueryBodySchema }), asyncHandler<unknown, any, NotionQueryBody>(async (req, res) => {
+  const { sorts, filter } = req.body;
 
-  try {
-    const query = await notion.databases.query({
-      database_id: process.env.NOTION_DATABASE_ID || '',
+  const query = await notion.databases.query({
+      database_id: env.NOTION_DATABASE_ID,
       sorts,
-      // filter: {
-
-      // }
+      filter
     });
 
     const data = saleParser.parseQueryDatabaseResponse(query);
 
-    res.status(200).json({ message: 'Success', data });
-  } catch (error) {
-    res.status(500).json({ message: 'Error', error: (error as Error).message });
-  }
-});
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true , data });
+}));
 
-const listener = app.listen(process.env.PORT, function () {
-  console.log(
-    'Your app is listening on port ' + (listener.address() as AddressInfo)?.port
-  );
+app.use(errorHandler)
+
+app.listen(env.PORT, () => {
+  console.log(`Your app is listening on port ${env.PORT}`);
 });

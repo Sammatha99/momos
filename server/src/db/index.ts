@@ -1,4 +1,6 @@
 require('dotenv').config();
 import { Client } from '@notionhq/client';
 
-export const notion = new Client({ auth: process.env.NOTION_SECRET });
+import { env } from '../env'
+
+export const notion = new Client({ auth: env.NOTION_SECRET });
