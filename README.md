@@ -1,17 +1,38 @@
 ## Notion Table View and Filters
-#### Nha Trang Ngo - Frontend Developer
+#### Nha Trang Ngo - frontend developer
+
+## How to Run the Project
+**1. Start the Server**
+Navigate to the server directory:
+cd server
+
+Install dependencies:
+npm install
+
+Start the server:
+npm start
+
+**2. Start the Client**
+Open a new terminal and navigate to the client directory:
+cd client
+
+Install dependencies:
+npm install
+
+Start the client:
+npm start
 
 
 
 ## ✅ Notion Database Table View & Filter UI - Feature Checklist
 
-### Table View UI
+**Table View UI**
 - [x] Basic table view for a Notion database
 - [x] Support sorting
 - [x] Rearrangement of columns (drag and drop)
 - [x] Resizing of columns (drag to resize)
 
-### Filter UI
+**Filter UI**
 - [x] Support for property types:
   - [x] checkbox
   - [x] date
@@ -24,11 +45,11 @@
 - [x] Compound filters with filter groups
   - [x] Support for nested conditions (configurable nesting level) (```FilterBuilderProps.maxDepth```)
 
-### Tests
+**Tests**
 - [ ] Unit tests for compound filters
 
 
-### Stretch Goals
+**Stretch Goals**
 - [ ] Implement NOT operator logic
 - [ ] Unit tests for NOT operator
 
@@ -36,10 +57,10 @@
 - [x] Docker Setup
 - [ ] Docker build and run
 
-## Prerequisites
+**Prerequisites**
 - Install Docker Desktop for Windows
 
-## Build and Run
+**Build and Run**
 
 In project root:
 
