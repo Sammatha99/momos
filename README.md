@@ -1,5 +1,6 @@
 ## Notion Table View and Filters
-#### Nha Trang Ngo 
+#### Nha Trang Ngo - Frontend Developer
+
 
 
 ## ✅ Notion Database Table View & Filter UI - Feature Checklist
@@ -31,8 +32,9 @@
 - [ ] Implement NOT operator logic
 - [ ] Unit tests for NOT operator
 
-## DOCKERIZE
-# Docker Setup
+## ✅ DOCKERIZE
+- [x] Docker Setup
+- [ ] Docker build and run
 
 ## Prerequisites
 - Install Docker Desktop for Windows
@@ -43,3 +45,9 @@ In project root:
 
 ```bash
 docker-compose up --build
+```
+I tried to install and run Docker Desktop on my Windows 10, but it failed because my system and WSL are outdated. Some WSL commands Docker needs are not supported, and automatic WSL updates are disabled.
+
+As a result, Docker can't start its services and the commands don't work. My system doesn't meet the requirements for Docker Desktop with WSL2, so I couldn't finish the Running or test it.
+
+Thank you for understanding.
