@@ -4,7 +4,7 @@ import globalStyles from "@src/index.module.css";
 import { FilterGroup, FilterOption } from "./types";
 import { initFilter } from "../SalesCRMTable/type";
 import clsx from "clsx";
-import FilterBuilder from "./components/FilterBuilder";
+import FilterBuilder from "./components/FilterBuild";
 
 interface ModalProps<T> {
   isOpen: boolean;
