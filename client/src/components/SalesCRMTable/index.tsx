@@ -1,12 +1,12 @@
-import { getSalesCRM } from "@src/api";
-import globalStyles from "@src/index.module.css";
-import { useMutation } from "@tanstack/react-query";
-import { SortingState } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
-import Filter from "../Filter";
-import { FilterGroup } from "../Filter/types";
-import ResizableReOrderableTable from "../ResizableReOrderableTable";
-import { columns, initFilter, saleCRMFilter } from "./type";
+import globalStyles from '@src/index.module.css';
+import { getSalesCRM } from '@src/api';
+import { useMutation } from '@tanstack/react-query';
+import { SortingState } from '@tanstack/react-table';
+import { useEffect, useState } from 'react';
+import Filter from '../Filter';
+import { FilterGroup } from '../Filter/types';
+import ResizableReOrderableTable from '../ResizableReOrderableTable';
+import { columns, initFilter, saleCRMFilter } from './type';
 
 const SalesCRMTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -15,9 +15,9 @@ const SalesCRMTable = () => {
   const {
     data: salesData = [],
     isPending,
-    mutate
+    mutate,
   } = useMutation({
-    mutationFn: getSalesCRM
+    mutationFn: getSalesCRM,
   });
 
   useEffect(() => {

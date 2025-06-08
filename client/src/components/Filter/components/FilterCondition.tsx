@@ -1,20 +1,20 @@
-import globalStyles from "@src/index.module.css";
-import clsx from "clsx";
-import Select, { SingleValue } from "react-select";
+import globalStyles from '@src/index.module.css';
+import clsx from 'clsx';
+import Select, { SingleValue } from 'react-select';
 import {
   Condition,
   FilterOption,
   OPERATORS_SINGLE,
   OperatorByType,
-  Operators
-} from "../types";
-import { useMemo } from "react";
+  Operators,
+} from '../types';
+import { useMemo } from 'react';
 
 const FilterCondition = <T,>({
   filterOptions,
   condition,
   onChange,
-  removeFilter
+  removeFilter,
 }: {
   filterOptions: FilterOption<T>[];
   condition: Condition<T>;
@@ -27,27 +27,27 @@ const FilterCondition = <T,>({
 
   const filterOptionsValues = filterOptions.map((option) => ({
     label: option.key,
-    value: option.key
+    value: option.key,
   }));
 
   const operatorValues =
     selectedOption && OperatorByType[selectedOption.type]
       ? OperatorByType[selectedOption.type].map((option) => ({
           label: option,
-          value: option
+          value: option,
         }))
       : [];
 
   const values =
-    selectedOption && "values" in selectedOption && selectedOption.values
+    selectedOption && 'values' in selectedOption && selectedOption.values
       ? selectedOption.values.map((value) => ({
           label: `${value}`,
-          value: value
+          value: value,
         }))
       : [];
 
   const selectedValues = useMemo(() => {
-    if (selectedOption?.type === "multi_select") {
+    if (selectedOption?.type === 'multi_select') {
       const values = Array.isArray(condition.value)
         ? condition.value
         : condition.value
@@ -56,14 +56,14 @@ const FilterCondition = <T,>({
 
       return values.map((value) => ({
         value,
-        label: `${value}`
+        label: `${value}`,
       }));
     }
 
     if (condition.value != null) {
       return {
         value: condition.value,
-        label: `${condition.value}`
+        label: `${condition.value}`,
       };
     }
 
@@ -85,7 +85,7 @@ const FilterCondition = <T,>({
           property: newProperty?.value,
           type: newSelected.type,
           operator: OperatorByType[newSelected.type][0],
-          value: undefined
+          value: undefined,
         });
     }
   };
@@ -103,7 +103,7 @@ const FilterCondition = <T,>({
         onChange({
           ...condition,
           operator: newOperator?.value as Operators,
-          value: undefined
+          value: undefined,
         });
       } else {
         onChange({ ...condition, operator: newOperator?.value as Operators });
@@ -114,24 +114,28 @@ const FilterCondition = <T,>({
   return (
     <div className={clsx([globalStyles.gap10, globalStyles.wrap])}>
       <Select
-        className={clsx([globalStyles.flex1, "basic-single"])}
+        inputId="field-select"
+        aria-label="Field Select"
+        className={clsx([globalStyles.flex1, 'basic-single'])}
         classNamePrefix="select"
         menuPosition="fixed"
         value={{
           value: selectedOption?.key,
-          label: selectedOption?.key
+          label: selectedOption?.key,
         }}
         onChange={onChangeProperty}
         name="fieldName"
         options={filterOptionsValues}
       />
       <Select
-        className={clsx([globalStyles.flex1, "basic-single"])}
+        inputId="operator-select"
+        aria-label="Operator Select"
+        className={clsx([globalStyles.flex1, 'basic-single'])}
         classNamePrefix="select"
         menuPosition="fixed"
         value={{
           value: condition.operator,
-          label: condition.operator
+          label: condition.operator,
         }}
         onChange={onChangeOperator}
         name="operator"
@@ -139,13 +143,15 @@ const FilterCondition = <T,>({
       />
       {(OPERATORS_SINGLE as readonly string[]).includes(
         condition.operator
-      ) ? null : "values" in (selectedOption || {}) ||
+      ) ? null : 'values' in (selectedOption || {}) ||
         Array.isArray(condition.value) ? (
         <Select
-          className={clsx([globalStyles.flex1, "basic-single"])}
+          inputId="values-select"
+          aria-label="Values Select"
+          className={clsx([globalStyles.flex1, 'basic-single'])}
           classNamePrefix="select"
           menuPosition="fixed"
-          isMulti={selectedOption?.type === "multi_select"}
+          isMulti={selectedOption?.type === 'multi_select'}
           value={selectedValues}
           onChange={(newOption) => {
             const newValue = Array.isArray(newOption)
@@ -154,7 +160,7 @@ const FilterCondition = <T,>({
 
             onChange({
               ...condition,
-              value: newValue
+              value: newValue,
             });
           }}
           name="values"
@@ -162,15 +168,15 @@ const FilterCondition = <T,>({
         />
       ) : (
         <input
-          type={selectedOption?.type || "text"}
+          type={selectedOption?.type || 'text'}
           value={condition.value as string}
           onChange={(e) => {
             onChange({
               ...condition,
               value:
-                selectedOption?.type === "number"
+                selectedOption?.type === 'number'
                   ? +e.target.value
-                  : e.target.value
+                  : e.target.value,
             });
           }}
           placeholder="Value"

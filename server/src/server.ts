@@ -4,7 +4,6 @@ import { StatusCodes } from "http-status-codes";
 import compression from 'compression'
 
 import { saleParser } from "./utils/parsers/response";
-import { parseSortQuery } from "./utils/parsers/query";
 import { notion } from "./db";
 import { env } from "./env";
 import { validate } from "./validators/validate";
@@ -17,23 +16,6 @@ const app = express();
 app.use(cors());
 app.use(compression())
 app.use(express.json());
-
-app.get("/test", async (req, res) => {
-  const sorts = parseSortQuery(req.query);
-
-  try {
-    const query = await notion.databases.query({
-      database_id: env.NOTION_DATABASE_ID,
-      sorts
-    });
-
-    const data = saleParser.parseQueryDatabaseResponse(query);
-
-    res.status(200).json({ message: "Success", data, sorts });
-  } catch (error) {
-    res.status(500).json({ message: "Error", error: (error as Error).message });
-  }
-});
 
 app.post("/", validate({ body: notionQueryBodySchema }), asyncHandler<unknown, any, NotionQueryBody>(async (req, res) => {
   const { sorts, filter } = req.body;

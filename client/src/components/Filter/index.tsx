@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import styles from "./styles.module.css";
-import globalStyles from "@src/index.module.css";
-import { FilterGroup, FilterOption } from "./types";
-import { initFilter } from "../SalesCRMTable/type";
-import clsx from "clsx";
-import FilterBuilder from "./components/FilterBuild";
+import React, { useEffect } from 'react';
+import styles from './styles.module.css';
+import globalStyles from '@src/index.module.css';
+import { FilterGroup, FilterOption } from './types';
+import { initFilter } from '../SalesCRMTable/type';
+import clsx from 'clsx';
+import FilterBuilder from './components/FilterBuilder';
 
 interface ModalProps<T> {
   isOpen: boolean;
   filterGroup: FilterGroup;
   FilterOptions: FilterOption<T>[];
+  maxDepth?: number;
   onClose: () => void;
   onSave: (filters: FilterGroup) => void;
 }
@@ -18,8 +19,9 @@ const Filter = <T,>({
   isOpen,
   filterGroup,
   FilterOptions,
+  maxDepth = 2,
   onClose,
-  onSave
+  onSave,
 }: ModalProps<T>) => {
   const [tempFilters, setTempFilters] =
     React.useState<FilterGroup>(filterGroup);
@@ -33,11 +35,11 @@ const Filter = <T,>({
     if (!isOpen) return;
 
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === 'Escape') onClose();
     };
 
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -68,7 +70,7 @@ const Filter = <T,>({
           filterGroup={tempFilters}
           onChange={onChange}
           depth={1}
-          maxDepth={2}
+          maxDepth={maxDepth}
         />
         <div className={clsx([globalStyles.mt20, globalStyles.gap10])}>
           <button onClick={onClose}>Cancel</button>

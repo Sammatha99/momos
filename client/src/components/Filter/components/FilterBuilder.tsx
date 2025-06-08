@@ -3,12 +3,12 @@ import {
   FilterGroup,
   FilterOption,
   LogicOperator,
-  OperatorByType
-} from "../types";
-import styles from "../styles.module.css";
-import globalStyles from "@src/index.module.css";
-import clsx from "clsx";
-import FilterCondition from "./FilterCondition";
+  OperatorByType,
+} from '../types';
+import styles from '../styles.module.css';
+import globalStyles from '@src/index.module.css';
+import clsx from 'clsx';
+import FilterCondition from './FilterCondition';
 
 interface FilterBuilderProps<T> {
   filterOptions: FilterOption<T>[];
@@ -25,7 +25,7 @@ const FilterBuilder = <T,>({
   onChange,
   depth,
   maxDepth,
-  isRoot = true
+  isRoot = true,
 }: FilterBuilderProps<T>) => {
   const updateFilterAt = (index: number, newFilter?: Filter<T>) => {
     const newFilters = [...filterGroup.filters];
@@ -52,9 +52,9 @@ const FilterBuilder = <T,>({
           property: filterOptions[0].key,
           operator: OperatorByType[filterOptions[0].type][0],
           type: filterOptions[0].type,
-          value: undefined
-        }
-      ]
+          value: undefined,
+        },
+      ],
     });
   };
 
@@ -62,7 +62,7 @@ const FilterBuilder = <T,>({
     if (depth >= maxDepth) return;
     onChange({
       ...filterGroup,
-      filters: [...filterGroup.filters, { logic: "and", filters: [] }]
+      filters: [...filterGroup.filters, { logic: 'and', filters: [] }],
     });
   };
 
@@ -80,9 +80,10 @@ const FilterBuilder = <T,>({
 
   return (
     <div
+      data-testid={`FilterBuilder_${depth}`}
       className={styles.filterGroup}
       style={{
-        marginLeft: (depth - 1) * 20
+        marginLeft: (depth - 1) * 20,
       }}
     >
       <div className={globalStyles.mb10}>
@@ -98,7 +99,7 @@ const FilterBuilder = <T,>({
       <div className={clsx([globalStyles.column, globalStyles.gap20])}>
         {filterGroup.filters.map((filter, i) => (
           <div key={i} className={clsx([globalStyles.mb10])}>
-            {"logic" in filter ? (
+            {'logic' in filter ? (
               <FilterBuilder
                 filterOptions={filterOptions}
                 filterGroup={filter}

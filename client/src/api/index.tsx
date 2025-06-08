@@ -1,13 +1,13 @@
 // src/api.ts
-import axios from "axios";
-import { SaleCRM, SalesCRMColumns } from "../components/SalesCRMTable/type";
-import { SortingState } from "@tanstack/react-table";
-import { MutationFunction } from "@tanstack/react-query";
-import { FilterGroup } from "@src/components/Filter/types";
-import { formatNotionFilter } from "@src/utils";
+import axios from 'axios';
+import { SaleCRM, SalesCRMColumns } from '../components/SalesCRMTable/type';
+import { SortingState } from '@tanstack/react-table';
+import { MutationFunction } from '@tanstack/react-query';
+import { FilterGroup } from '@src/components/Filter/types';
+import { formatNotionFilter } from '@src/utils';
 
 const api = axios.create({
-  baseURL: "http://localhost:8000"
+  baseURL: 'http://localhost:8000',
 });
 
 export const getSalesCRM: MutationFunction<
@@ -20,15 +20,15 @@ export const getSalesCRM: MutationFunction<
     sortsProps?.length && Array.isArray(sortsProps)
       ? sortsProps.map((sort) => ({
           property: SalesCRMColumns[sort.id as keyof typeof SalesCRMColumns],
-          direction: sort.desc ? "descending" : "ascending"
+          direction: sort.desc ? 'descending' : 'ascending',
         }))
       : undefined;
   const filter = filterProps
     ? formatNotionFilter(filterProps, SalesCRMColumns)
     : undefined;
-  const res = await api.post("/", {
+  const res = await api.post('/', {
     sorts,
-    filter
+    filter,
   });
   return res.data.data as SaleCRM[];
 };
